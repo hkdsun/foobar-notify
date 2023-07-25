@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package foobar;
+
+
+service FoobarService {
+  rpc TriggerRescan(RescanRequest) returns (RescanResponse) {}
+}
+
+message RescanRequest {
+  string foobar_path = 1;
+}
+
+message RescanResponse {
+  bool success = 1;
+}
