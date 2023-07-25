@@ -3,8 +3,7 @@ require 'grpc'
 require 'proto/foobar_services_pb'
 
 def main
-  # Create a gRPC client
-  stub = Proto::FoobarService::Stub.new('192.168.0.26:8080', :this_channel_is_insecure)
+  stub = Proto::FoobarService::Stub.new('win11:8080', :this_channel_is_insecure)
 
   # Create a request
   req = Proto::RescanRequest.new
