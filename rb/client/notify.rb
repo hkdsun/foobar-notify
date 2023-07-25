@@ -1,18 +1,15 @@
-$LOAD_PATH.unshift(File.expand_path('../../', __FILE__))
-require 'grpc'
-require 'proto/foobar_services_pb'
+$LOAD_PATH.unshift(File.expand_path("../../", __FILE__))
+require "grpc"
+require "proto/foobar_services_pb"
 
-def main
-  stub = Proto::FoobarService::Stub.new('win11:8080', :this_channel_is_insecure)
+module FoobarNotify
+  def self.notify
+    stub = Proto::FoobarService::Stub.new("win11:9031", :this_channel_is_insecure)
 
-  # Create a request
-  req = Proto::RescanRequest.new
+    # Create a request
+    req = Proto::RescanRequest.new
 
-  # Send the request to the server
-  res = stub.trigger_rescan(req)
-
-  # Print the response
-  puts "Success: #{res.success}"
+    # Send the request to the server
+    stub.trigger_rescan(req)
+  end
 end
-
-main

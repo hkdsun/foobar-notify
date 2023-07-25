@@ -34,7 +34,7 @@ func main() {
 	flag.Parse()
 
 	// Start the gRPC server
-	lis, err := net.Listen("tcp", ":8080")
+	lis, err := net.Listen("tcp", ":9031")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
