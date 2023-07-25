@@ -4,22 +4,22 @@ import (
 	"context"
 	"flag"
 	"foobar/proto"
-	"io/ioutil"
 	"log"
 	"net"
+	"os/exec"
 
 	"google.golang.org/grpc"
 )
 
 type server struct {
-	foobarPath string
+	scriptPath string
 
 	proto.UnimplementedFoobarServiceServer
 }
 
 func (s *server) TriggerRescan(ctx context.Context, req *proto.RescanRequest) (*proto.RescanResponse, error) {
-	// Write to /tmp/debug
-	err := ioutil.WriteFile("/tmp/debug", []byte(s.foobarPath), 0644)
+	cmd := exec.Command(s.scriptPath)
+	err := cmd.Run()
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +28,7 @@ func (s *server) TriggerRescan(ctx context.Context, req *proto.RescanRequest) (*
 
 func main() {
 	// Define command line flags
-	foobarPath := flag.String("foobarPath", "", "path to foobar2000.exe")
+	scriptPath := flag.String("scriptPath", "", "path to foobar notification script")
 
 	// Parse command line flags
 	flag.Parse()
@@ -40,7 +40,7 @@ func main() {
 	}
 	s := grpc.NewServer()
 	proto.RegisterFoobarServiceServer(s, &server{
-		foobarPath: *foobarPath,
+		scriptPath: *scriptPath,
 	})
 
 	// Serve the gRPC server
