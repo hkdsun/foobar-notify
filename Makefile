@@ -11,5 +11,8 @@ server:
 clgo:
 	go run client/main.go
 
+clgo-build:
+	go build -o client/client client/main.go
+
 clrb:
 	ruby rb/client/notify.rb
